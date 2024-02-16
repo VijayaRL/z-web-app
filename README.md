@@ -1,5 +1,6 @@
 ### Run Terraform to create EKS Cluster
 
+
 Go to terraform/resources/ folder and run 
 
 Terraform Plan
