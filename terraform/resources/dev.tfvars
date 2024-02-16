@@ -1,0 +1,13 @@
+project_name = "project1"
+project_suffix = "dev"
+vpc_cidr = "10.111.0.0/16"
+public_cidr_subnet_a = "10.111.128.0/24"
+public_cidr_subnet_b = "10.111.129.0/24"
+public_cidr_subnet_c = "10.111.130.0/24"
+k8s_version = "1.29"
+ondemand_services_instance = ["t3a.medium"]
+ondemand_services_desired_size = "1"
+ondemand_services_max_size = "1"
+ondemand_services_min_size = "1"
+ondemand_services_disk_size = "5"
+region = "us-east-1"

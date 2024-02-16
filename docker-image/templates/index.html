@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K8s Pod Information</title>
+</head>
+<body>
+    <h1>K8s Pod Information</h1>
+    <table border="1">
+        <tr>
+            <th>Pod Name</th>
+            <th>Pod IP</th>
+            <th>Container Name</th>
+            <th>Container Port</th>
+        </tr>
+        {% for info in pod_info %}
+            <tr>
+                <td>{{ info[0] }}</td>
+                <td>{{ info[1] }}</td>
+                <td>{{ info[2] }}</td>
+                <td>{{ info[3] if info[3] else 'N/A' }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
