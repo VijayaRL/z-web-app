@@ -70,7 +70,8 @@ data "aws_iam_policy_document" "node_ec2_policy" {
     sid     = "NodeEC2Perms"
     effect  = "Allow"
     actions = [
-      "s3:*"
+      "s3:*",
+      "ec2:*"
       ]
     resources = ["*"]
     }

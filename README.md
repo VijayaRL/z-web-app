@@ -24,6 +24,7 @@ docker push -t vijayalakshman/python_web_app:latest
 ### Install ArgoCD 
 
 ```
+aws eks update-kubeconfig --profile default --name web-app-dev --alias eks-dev;kubectl config use-context eks-dev
 kubectl create ns argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v2.10.0/manifests/install.yaml
 ```
