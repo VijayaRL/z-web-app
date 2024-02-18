@@ -10,7 +10,7 @@ resource "aws_iam_openid_connect_provider" "oidc_provider" {
   url             = aws_eks_cluster.eks.identity[0].oidc[0].issuer
 
   tags = {
-    Name       = "${var.project_name}-${var.project_suffix}"
-    Project    = "${var.project_name}-${var.project_suffix}"
+    Name    = "${var.project_name}-${var.project_suffix}"
+    Project = "${var.project_name}-${var.project_suffix}"
   }
 }

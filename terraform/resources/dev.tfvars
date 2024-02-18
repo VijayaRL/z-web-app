@@ -1,13 +1,7 @@
-project_name = "web-app"
+project_name = "vrledu"
 project_suffix = "dev"
-vpc_cidr = "10.111.0.0/16"
-public_cidr_subnet_a = "10.111.128.0/24"
-public_cidr_subnet_b = "10.111.129.0/24"
-public_cidr_subnet_c = "10.111.130.0/24"
+vpc_cidr = "10.140.0.0/16"
+public_cidrs  = ["10.140.128.0/24", "10.140.129.0/24"]
+private_cidrs = ["10.140.0.0/18", "10.140.64.0/18"]
 k8s_version = "1.29"
-ondemand_services_instance = ["t3a.large"]
-ondemand_services_desired_size = "1"
-ondemand_services_max_size = "2"
-ondemand_services_min_size = "1"
-ondemand_services_disk_size = "20"
 region = "us-east-1"

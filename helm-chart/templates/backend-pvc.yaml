@@ -6,9 +6,9 @@ metadata:
   labels:
     app: backend
 spec:
+  storageClassName: ebs-sc
   accessModes:
   - ReadWriteOnce
   resources:
     requests:
       storage: 2Gi
-  storageClassName: ebs-csi-gp2

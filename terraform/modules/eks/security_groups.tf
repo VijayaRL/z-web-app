@@ -48,7 +48,7 @@ resource "aws_security_group" "workers" {
     Name                                        = "${var.project_name}-${var.project_suffix}-workers-sg"
     Project                                     = "${var.project_name}-${var.project_suffix}"
     "kubernetes.io/cluster/${var.project_name}" = "owned"
-    }
+  }
 }
 
 # Workers Security Group Rule

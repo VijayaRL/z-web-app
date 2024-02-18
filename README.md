@@ -1,6 +1,5 @@
 ### Run Terraform to create EKS Cluster
 
-
 Go to terraform/resources/ folder and run 
 
 Terraform Plan
@@ -11,20 +10,25 @@ terraform plan -var-file="dev.tfvars"
 
 Terraform Apply
 ```
+terraform init -var-file="dev.tfvars"
 terraform apply -var-file="dev.tfvars"
 ```
+
+### Update EBS CSI driver role name
+
+- Go to `aws-ebs-csi-driver` folder and update `ebs-csi-controller-sa.yaml`. Update the role ARN with your's `eks.amazonaws.com/role-arn: arn:aws:iam::123456789:role/vrledu-dev-ebs-csi-controller-role`
+- Install `aws-ebs-csi-driver` by running `make install` (update region and cluster name in Makefile, if it's different for you)
 
 ### Build and Push the docker image to DockerHub
 
 ```
-docker build -t vijayalakshman/python_web_app:latest .
-docker push -t vijayalakshman/python_web_app:latest
+docker build -t datawavelabs/python_web_app:latest .
+docker push -t datawavelabs/python_web_app:latest
 ```
 
 ### Install ArgoCD 
 
 ```
-aws eks update-kubeconfig --profile default --name web-app-dev --alias eks-dev;kubectl config use-context eks-dev
 kubectl create ns argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v2.10.0/manifests/install.yaml
 ```
@@ -40,33 +44,22 @@ kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.pas
 ```
 
 Access the ArgoCD server using Service External IP
-```
-kubectl get svc -n argocd
-https://<<External DNS of argocd server>>/
-```
 
 ### Run Argocd application
-Create docker secret first
-```
-kubectl create ns web-app
-kubectl -n web-app create secret docker-registry docker-login --docker-server=https://index.docker.io/v1/ --docker-username= --docker-password= --docker-email=
-```
 
 ```
-cd ../../argocd-app/
 kubectl apply -f web-app.yaml
 ```
 
 ### Access web application 
 
 ```
-kubectl get svc -n web-app
 http://<load-balancer-dns>
 ```
 
 ### Connect to Postgres pod
-In order to get Postgres credentials, check helm-chart/templates/backend-secret.yaml and you'll get the username and password. 
-You can decode it using https://www.base64decode.org/
+
+In order to get Postgres credentials, check `helm-chart/templates/backend-secret.yaml` and you'll get the `username` and `password`. You can decode it using https://www.base64decode.org/
 
 ```
 kubectl -n web-app exec -it backend-5cd4bb994d-blcjn -- psql -h localhost -U admin --password -p 5432
@@ -94,6 +87,7 @@ pod_info=#
 ```
 
 ### Install Grafana/ Prometheus
+
 ```
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo add grafana https://grafana.github.io/helm-charts
@@ -103,6 +97,7 @@ helm upgrade --cleanup-on-fail --install grafana grafana/grafana --namespace mon
 ```
 
 Post deployment, check all pods and services
+
 ```
 kubectl -n monitoring get pods
 NAME                                                READY   STATUS    RESTARTS   AGE
@@ -126,7 +121,7 @@ prometheus-prometheus-pushgateway     ClusterIP   10.228.2.52    <none>        9
 prometheus-server                     ClusterIP   10.228.6.93    <none>        80/TCP     95s
 ```
 
-Expose the Grafana service via Public Load Balancer and use the grafana service External IP to connect to it
+Expose the Grafana service via Public Load Balancer and use the `grafana` service External IP to connect to it
 ```
 kubectl get service grafana -n monitoring -o json | jq '.spec.type = "LoadBalancer"' | kubectl apply -f -
 ```
@@ -135,8 +130,6 @@ To login to Grafana, you can fetch credentials from the Grafana secret
 
 ```
 kubectl -n monitoring get secret grafana -o yaml
-
-echo "password_value" | openssl base64 -d ; echo
-echo "username_value" | openssl base64 -d ; echo
 ```
-Fetch the admin-password and admin-user and decode it using https://www.base64decode.org/
+
+Fetch the `admin-password` and `admin-user` and decode it using https://www.base64decode.org/
