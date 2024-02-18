@@ -1,5 +1,5 @@
 build:
-	docker build -t datawavelabs/python_web_app:latest .
+	docker build -t vijayalakshman/python_web_app:latest .
 
 push:
-	docker push datawavelabs/python_web_app:latest
+	docker push vijayalakshman/python_web_app:latest

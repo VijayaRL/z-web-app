@@ -4,4 +4,4 @@ metadata:
   name: ebs-csi-controller-sa
   namespace: ebs-csi-controller
   annotations:
-    eks.amazonaws.com/role-arn: arn:aws:iam::123456789:role/vrledu-dev-ebs-csi-controller-role
+    eks.amazonaws.com/role-arn: arn:aws:iam::819370969351:role/vrledu-dev-ebs-csi-controller-role

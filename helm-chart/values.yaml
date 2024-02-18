@@ -3,5 +3,5 @@ name: web-app
 replicas: 1
 
 image:
-  name: datawavelabs/python_web_app
+  name: vijayalakshman/python_web_app
   tag: latest
